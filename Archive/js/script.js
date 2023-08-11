@@ -103,7 +103,6 @@ function getSearchHistory() {
     });
 }
 
-// ... existing code ...
 
 // Fetch 5-day forecast
 function getForecastWeather(lat, lon) {
@@ -146,10 +145,8 @@ function getForecastWeather(lat, lon) {
         });
 }
 
-// ... existing code ...
 
 
-// Initialize
 getSearchHistory();
 if (searchHistory.length > 0) {
     getWeather(searchHistory[searchHistory.length - 1]);
