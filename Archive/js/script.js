@@ -103,6 +103,52 @@ function getSearchHistory() {
     });
 }
 
+// ... existing code ...
+
+// Fetch 5-day forecast
+function getForecastWeather(lat, lon) {
+    const queryUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+    fetch(queryUrl)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            // Clear previous forecast data
+            const forecastContainer = document.getElementById('forecast-container');
+            forecastContainer.innerHTML = '';
+
+            const forecastEls = document.createElement('div');
+            forecastEls.classList.add('row');
+
+            // Loop through forecast data and create forecast cards
+            for (let i = 0; i < data.list.length; i += 8) {
+                const forecast = data.list[i];
+                const forecastDate = new Date(forecast.dt * 1000);
+                const forecastDay = forecastDate.getDate();
+                const forecastMonth = forecastDate.getMonth() + 1;
+                const forecastYear = forecastDate.getFullYear();
+
+                const forecastCard = document.createElement('div');
+                forecastCard.classList.add('col-12', 'col-md-2', 'forecast');
+                forecastCard.innerHTML = `
+                    <p class="mt-3 mb-0 forecast-date">${forecastMonth}/${forecastDay}/${forecastYear}</p>
+                    <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png" alt="${forecast.weather[0].description}">
+                    <p>Temp: ${forecast.main.temp} &#176F</p>
+                    <p>Humidity: ${forecast.main.humidity}%</p>
+                `;
+
+                forecastEls.appendChild(forecastCard);
+            }
+
+            forecastContainer.appendChild(forecastEls);
+            getSearchHistory();
+        });
+}
+
+// ... existing code ...
+
+
 // Initialize
 getSearchHistory();
 if (searchHistory.length > 0) {
