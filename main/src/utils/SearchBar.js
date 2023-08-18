@@ -12,6 +12,10 @@ function SearchBar() {
             const data = await res.json();
             console.log(data);
             setWeatherData(data);
+
+            const recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+            recentSearches.unshift(city);
+            localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
         } catch (err) {
             console.log(err);
         }

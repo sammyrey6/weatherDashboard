@@ -16,7 +16,9 @@ function WeatherDisplay({ weatherData }) {
         <p>No weather other data available</p>
       )}
     </div>
+    
   );
 }
+
 
 export default WeatherDisplay;
